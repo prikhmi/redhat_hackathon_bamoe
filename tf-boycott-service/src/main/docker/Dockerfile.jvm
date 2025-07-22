@@ -1,0 +1,16 @@
+FROM quay.io/quarkus/quarkus-micro-image:2.0
+
+LABEL maintainer="prkhamit@ibm.com"
+
+LABEL org.kie.kogito.version="8.0.5-3"
+
+WORKDIR /work/
+
+COPY target/app.jar app.jar
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+  CMD curl -f http://localhost:8080/q/health || exit 1
+
+CMD ["java", "-jar", "app.jar"]

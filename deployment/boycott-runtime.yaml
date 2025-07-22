@@ -1,0 +1,17 @@
+apiVersion: rhpam.kiegroup.org/v1
+kind: KogitoRuntime
+metadata:
+  name: tf-boycott-service
+  namespace: v-sharp
+spec:
+  replicas: 1
+  runtime: quarkus
+  image: image-registry.openshift-image-registry.svc:5000/v-sharp/tf-boycott-service:latest
+  service:
+    labels:
+      app: tf-boycott-service
+  env:
+    - name: QUARKUS_LOG_LEVEL
+      value: DEBUG
+    - name: QUARKUS_PROFILE
+      value: openshift

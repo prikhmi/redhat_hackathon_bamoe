@@ -1,0 +1,5 @@
+<kmodule xmlns="http://www.drools.org/xsd/kmodule">
+  <kbase name="boycott-kbase" packages="rules.boycott">
+    <ksession name="ksession-boycott"/>
+  </kbase>
+</kmodule>

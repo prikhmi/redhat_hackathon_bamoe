@@ -1,0 +1,36 @@
+package rules.boycott;
+
+import com.ibm.boycott.model.DroolsRequest;
+import com.ibm.common.config.MessageConfig;
+import com.ibm.common.model.LcEvaluationRequest;
+import com.ibm.common.util.RuleResultHelper;
+
+global com.ibm.common.model.LcEvaluationResult response;
+
+rule "LC Boycott Clause Present"
+  when
+    $request : DroolsRequest(boycottStatus == true)
+    $lcRequest : LcEvaluationRequest()
+then
+    String refData = "Reference Data Input : 46A: Documents Required : " + $lcRequest.getLcDocumentRequired()
+                   + "\n47a: Additional Conditions : " + $lcRequest.getLcAdditionalCondition();
+
+    String highText = String.join(":", $request.getHighlightText());
+
+    RuleResultHelper.setValues(response, "LC Boycott Clause Present", "FAIL", MessageConfig.BOYCOTT_YES, refData, highText);
+
+    System.out.println("[LC Boycott Clause Present Completed]");
+end
+
+rule "LC Boycott Clause Not Present"
+  when
+    $request : DroolsRequest(boycottStatus == false)
+    $lcRequest : LcEvaluationRequest()
+then
+    String refData = "Reference Data Input : 46A: Documents Required : " + $lcRequest.getLcDocumentRequired()
+                   + "\n47a: Additional Conditions : " + $lcRequest.getLcAdditionalCondition();
+
+    RuleResultHelper.setValues(response, "LC Boycott Clause Not Present", "PASS", MessageConfig.BOYCOTT_NO, refData);
+
+    System.out.println("[LC Boycott Clause Not Present Completed]");
+end

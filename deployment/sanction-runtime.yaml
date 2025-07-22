@@ -1,0 +1,14 @@
+apiVersion: rhpam.kiegroup.org/v1
+kind: KogitoRuntime
+metadata:
+  name: tf-sanction-service
+  namespace: v-sharp
+spec:
+  replicas: 1
+  runtime: quarkus
+  image: image-registry.openshift-image-registry.svc:5000/v-sharp/tf-sanction-service:latest
+  env:
+    - name: QUARKUS_LOG_LEVEL
+      value: DEBUG
+    - name: QUARKUS_PROFILE
+      value: openshift

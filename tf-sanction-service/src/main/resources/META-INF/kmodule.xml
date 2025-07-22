@@ -1,0 +1,5 @@
+<kmodule xmlns="http://www.drools.org/xsd/kmodule">
+  <kbase name="sanction-kbase" packages="rules.sanction">
+    <ksession name="ksession-sanction"/>
+  </kbase>
+</kmodule>

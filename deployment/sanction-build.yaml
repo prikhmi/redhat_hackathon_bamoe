@@ -1,0 +1,22 @@
+apiVersion: rhpam.kiegroup.org/v1 
+kind: KogitoBuild
+metadata:
+  name: tf-sanction-service-build
+  namespace: v-sharp
+spec:
+  type: RemoteSource
+  runtime: quarkus
+  gitSource:
+    uri: https://github.ibm.com/prkhamit/rh_bamoe.git
+    contextDir: tf-sanction-service
+    reference: master
+  source:
+   sourceSecret:
+     name: bamoe-git      
+  resources:
+    limits:
+      memory: "2Gi"
+      cpu: "1"
+  env:
+    - name: QUARKUS_PROFILE
+      value: openshift

@@ -1,0 +1,35 @@
+package rules.sanction;
+
+import com.ibm.sanction.model.DroolsRequest;
+import com.ibm.common.config.MessageConfig;
+import com.ibm.common.model.LcEvaluationRequest;
+import com.ibm.common.util.RuleResultHelper;
+global com.ibm.common.model.LcEvaluationResult response;
+
+rule "LC Sanction Clause Present"
+  when
+    $request : DroolsRequest(sanctionStatus == true)
+    $lcRequest : LcEvaluationRequest()
+then
+    String refData = "Reference Data Input : 46A: Documents Required : " + $lcRequest.getLcDocumentRequired()
+                   + "\n47a: Additional Conditions : " + $lcRequest.getLcAdditionalCondition();
+
+    String highText = String.join(":", $request.getHighlightText());
+
+    RuleResultHelper.setValues(response, "LC Sanction Clause Present", "FAIL", MessageConfig.SANCTION_YES, refData, highText);
+
+    System.out.println("[LC Sanction Clause Present Completed]");
+end
+
+rule "LC Sanction Clause Not Present"
+  when
+    $request : DroolsRequest(sanctionStatus == false)
+    $lcRequest : LcEvaluationRequest()
+then
+    String refData = "Reference Data Input : 46A: Documents Required : " + $lcRequest.getLcDocumentRequired()
+                   + "\n47a: Additional Conditions : " + $lcRequest.getLcAdditionalCondition();
+
+    RuleResultHelper.setValues(response, "LC Sanction Clause Not Present", "PASS", MessageConfig.SANCTION_NO, refData);
+
+    System.out.println("[LC Sanction Clause Not Present Completed]");
+end
