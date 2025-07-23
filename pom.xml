@@ -8,7 +8,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>tf-common</module>
         <module>tf-boycott-service</module>
         <module>tf-sanction-service</module>
     </modules>
